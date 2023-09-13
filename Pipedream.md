@@ -98,7 +98,7 @@ export default defineComponent({
 ```
 
 ## 4. Notion
-Step 3 is to update the database item. For now I'm just updating the Poster field with a link to the movie poster. Later I'll also update the title. That way, all we have to do is enter a link in the notion database, then when this runs the title and the poster will be updated.
+Step 3 is to update the database item. Update the title and poster fields with data pulled from imdb. That way, all we have to do is enter a link in the notion database, then when this runs the title and the poster will be updated.
 
 - Notion Account: dropdown select
 ```javascript
@@ -124,6 +124,15 @@ export default defineComponent({
         "properties": {
           "Poster": {
             "url": steps.notion.$return_value.poster_link
+          },
+          "Title": {
+            "title": [
+              {
+                "text":{
+              "content": steps.notion.$return_value.title
+                }
+              }
+            ]
           }
         }
       }
