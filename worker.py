@@ -5,9 +5,23 @@ import os
 
 
 """
-1. get the database items which have either an empty Title or Poster
-3. if either empty, get the movie details from imdb
-4. update the database item with the movie details
+## Notion Watch List Metadata Updater
+This python script will does the following:
+1. Get Notion database items and filter for items with either an empty Title or Poster field.
+2. For each matching item, query IMDB for the movie details.
+3. Update the Notion database item with the movie details.
+
+The script assumes you have a notion database with at least the following columns:
+- Title (the title of the movie)
+- Link (the imdb link to the movie)
+- Poster (a link to the poster image for the movie)
+You can add any other columns you wish to your Notion database, as long as it has the above three.
+
+How to use:
+1. Make sure your API key and Notion database ID are available to python as environment variables.
+2. Browse IMDB and find movies or TV shows you want to add to your watch list.
+3. Copy the IMDB url for each movie or TV show you want to add to your watch list, and paste it in the Link column of your Notion database.
+4. Run this script. It will query your Notion database for any items with an empty Title or Poster field, and update them with the movie details from IMDB.
 """
 
 # You need to provide your own Notion API token and database ID here
@@ -43,7 +57,6 @@ def get_notion_database(databaseId: str, token: str):
         return (
             f"Request failed with status code {response.status_code}, {response.text}"
         )
-
 
 
 def get_movie_details(imdb_link: str) -> tuple:
@@ -106,7 +119,9 @@ def update_notion_page(pageId: str, title: str, poster_link: str, token: str):
     if response.status_code == 200:
         return f"Success: updated {title} at {pageId}"
     else:
-        return f"Request failed with status code {response.status_code}, {response.text}"
+        return (
+            f"Request failed with status code {response.status_code}, {response.text}"
+        )
 
 
 # Get database items with either no title or poster link
@@ -115,12 +130,14 @@ results = get_notion_database(NOTION_DATABASE_ID, NOTION_TOKEN)
 if results["results"]:
     for result in results["results"]:
         movie_id = result["properties"]["Link"]["url"]
-        database_entry_id = result["url"].split('/')[-1]
+        database_entry_id = result["url"].split("/")[-1]
         print(f"movie_id's to be updated: {movie_id}")
         print(f"database_entry_id's to be updated: {database_entry_id}")
         title, poster_image, formatted_imdb_url = get_movie_details(movie_id)
         # update_notion_page
-        update_db_response = update_notion_page(database_entry_id, title, poster_image, NOTION_TOKEN)
+        update_db_response = update_notion_page(
+            database_entry_id, title, poster_image, NOTION_TOKEN
+        )
         print(update_db_response)
 else:
     print("No movies needing updates found...")
