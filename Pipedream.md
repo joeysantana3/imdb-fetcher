@@ -1,3 +1,5 @@
+Pipedream throttled me pretty quickly while using their free tier, so I created a script that can do it locally and will deploy it to something like an AWS Lambda function.
+---
 I'm attempting to use [pipedream](https://pipedream.com) as a way to automate updating the info. I have a basic task working that I'm going to copy here.
 
 Pipedream works by configuring tasks as blocks. Each tasks has an output that you can then use in the next task.
