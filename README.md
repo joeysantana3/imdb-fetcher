@@ -8,6 +8,7 @@ The script can be modified to extract and update more infomration, such as relea
 NOTICE: This script relies on the HTML structure of an IMDB page to stay as it was when the script was written. If IMDB changes their page layout, this will break.
 
 ### What it does.
+
 1. Get Notion database items and filter for items with either an empty Title or Poster field.
 2. For each matching item, query IMDB for the movie details.
 3. Update the Notion database item with the movie details.
@@ -27,6 +28,17 @@ You can add any other columns you wish to your Notion database, as long as it ha
 2. Browse IMDB and find movies or TV shows you want to add to your watch list.
 3. Copy the IMDB url for each movie or TV show you want to add to your watch list, and paste it in the Link column of your Notion database.
 4. Run this script. It will query your Notion database for any items with an empty Title or Poster field, and update them with the movie details from IMDB.
+
+### Deploy the job to the cloud.
+
+This script is much more useful and conveinent when it's run in the cloud and doesn't require any manual intervention or your local computer be up and running. There are many services out there that will do this, but [Render](https://render.com) is th easiest in my opinion. They have a [cronjob](https://render.com/docs/cronjobs) function that is perfect for this.
+
+1. Go to https://render.com
+2. Create an account.
+3. Create a new cron job.
+4. Connect your github account
+5. Add your environment vars to the cron job using the Render UI.
+6. Deploy
 
 ### Demo
 https://github.com/joeysantana3/imdb-fetcher/assets/40314133/c7b3a909-08ec-476e-a42f-1263449c4a8f
