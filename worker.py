@@ -174,10 +174,9 @@ if __name__ == "__main__":
                 movie_id = result["properties"]["Link"]["url"]
                 database_entry_id = result['id']
                 logging.debug(f"database_entry_id: {database_entry_id}")
-                logging.info(f"movie_id's to be updated: {movie_id}")
-                logging.info(f"database_entry_id's to be updated: {database_entry_id}")
+                logging.info(f"movie_id to be updated: {movie_id}")
+                logging.info(f"database_entry_id to be updated: {database_entry_id}")
                 title, poster_image, formatted_imdb_url = get_movie_details(movie_id)
-                # update_notion_page
                 update_db_response = update_notion_page(
                     database_entry_id, title, poster_image, NOTION_TOKEN
                 )
