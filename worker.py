@@ -58,7 +58,7 @@ def get_notion_database(databaseId: str, token: str):
             f"Request failed with status code {response.status_code}, {response.text}"
         )
 
-
+# This function isn't used in the primary workflow
 def get_movie_details(imdb_link: str) -> tuple:
     print(f"Getting movie details for {imdb_link}")
     imdb_id = re.search(r"tt\d+", imdb_link).group()
@@ -83,7 +83,7 @@ def get_movie_details(imdb_link: str) -> tuple:
     return title, poster_image, formatted_imdb_url
 
 
-# 3. Query the Notion database
+# 2. Query the Notion database
 def query_notion_database(databaseId: str, link: str, token: str):
     headers = {
         "Authorization": f"Bearer {token}",
@@ -124,20 +124,20 @@ def update_notion_page(pageId: str, title: str, poster_link: str, token: str):
         )
 
 
-# Get database items with either no title or poster link
-results = get_notion_database(NOTION_DATABASE_ID, NOTION_TOKEN)
-# get the details for each movie
-if results["results"]:
-    for result in results["results"]:
-        movie_id = result["properties"]["Link"]["url"]
-        database_entry_id = result["url"].split("/")[-1]
-        print(f"movie_id's to be updated: {movie_id}")
-        print(f"database_entry_id's to be updated: {database_entry_id}")
-        title, poster_image, formatted_imdb_url = get_movie_details(movie_id)
-        # update_notion_page
-        update_db_response = update_notion_page(
-            database_entry_id, title, poster_image, NOTION_TOKEN
-        )
-        print(update_db_response)
-else:
-    print("No movies needing updates found...")
+if __name__ == "__main__":
+    results = get_notion_database(NOTION_DATABASE_ID, NOTION_TOKEN)
+
+    if results["results"]:
+        for result in results["results"]:
+            movie_id = result["properties"]["Link"]["url"]
+            database_entry_id = result["url"].split("/")[-1]
+            print(f"movie_id's to be updated: {movie_id}")
+            print(f"database_entry_id's to be updated: {database_entry_id}")
+            title, poster_image, formatted_imdb_url = get_movie_details(movie_id)
+            # update_notion_page
+            update_db_response = update_notion_page(
+                database_entry_id, title, poster_image, NOTION_TOKEN
+            )
+            print(update_db_response)
+    else:
+        print("No movies needing updates found...")
