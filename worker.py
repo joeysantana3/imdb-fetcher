@@ -29,7 +29,7 @@ How to use:
 # Constants
 NOTION_TOKEN = os.environ.get("NOTION_API_KEY")
 NOTION_DATABASE_ID = os.environ.get("NOTION_DB_ID")
-DEBUG = True
+DEBUG = False
 NOTION_VERSION = "2022-06-28"
 
 # Setup logging
@@ -152,12 +152,14 @@ def update_notion_page(pageId: str, title: str, poster_link: str, token: str) ->
         "properties": {
             "Poster": {"url": poster_link},
             "Title": {"title": [{"text": {"content": title}}]},
+        },
+        "cover": {"type": "external", "external": {"url": poster_link}
         }
     }
     response = requests.patch(
         f"https://api.notion.com/v1/pages/{pageId}", headers=NOTION_HEADERS, json=data
     )
-
+    logging.debug(response.text)
     response.raise_for_status()
     return f"Success: updated {title} at {pageId}"
 
@@ -170,7 +172,8 @@ if __name__ == "__main__":
         for result in results["results"]:
             try:
                 movie_id = result["properties"]["Link"]["url"]
-                database_entry_id = result["url"].split("/")[-1]
+                database_entry_id = result['id']
+                logging.debug(f"database_entry_id: {database_entry_id}")
                 logging.info(f"movie_id's to be updated: {movie_id}")
                 logging.info(f"database_entry_id's to be updated: {database_entry_id}")
                 title, poster_image, formatted_imdb_url = get_movie_details(movie_id)
@@ -181,5 +184,6 @@ if __name__ == "__main__":
                 logging.info(update_db_response)
             except Exception as e:
                 logging.error(f"Error processing movie {movie_id}: {str(e)}")
+                raise e
     else:
         logging.info("No movies needing updates found...")
