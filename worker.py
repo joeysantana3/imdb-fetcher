@@ -58,7 +58,7 @@ def get_notion_database(databaseId: str, token: str):
             f"Request failed with status code {response.status_code}, {response.text}"
         )
 
-# This function isn't used in the primary workflow
+# 2. get the imdb details
 def get_movie_details(imdb_link: str) -> tuple:
     print(f"Getting movie details for {imdb_link}")
     imdb_id = re.search(r"tt\d+", imdb_link).group()
@@ -83,7 +83,7 @@ def get_movie_details(imdb_link: str) -> tuple:
     return title, poster_image, formatted_imdb_url
 
 
-# 2. Query the Notion database
+# This function isnt used in the primary workflow
 def query_notion_database(databaseId: str, link: str, token: str):
     headers = {
         "Authorization": f"Bearer {token}",
@@ -99,7 +99,7 @@ def query_notion_database(databaseId: str, link: str, token: str):
     return response.json()
 
 
-# 4. Update the Notion database item
+# 3. Update the Notion database item
 def update_notion_page(pageId: str, title: str, poster_link: str, token: str):
     headers = {
         "Authorization": f"Bearer {token}",
