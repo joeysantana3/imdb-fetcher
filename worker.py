@@ -103,11 +103,11 @@ def get_movie_details(imdb_link: str) -> tuple:
         raise ValueError(f"No poster image found for IMDB link: {imdb_link}")
     poster_image = poster_img_html[0].get("content")
 
-    if DEBUG:
-        logging.debug(f"imdb_id: {imdb_id}")
-        logging.debug(f"formatted_imdb_url: {formatted_imdb_url}")
-        logging.debug(f"response code: {page.status_code}")
-        logging.debug(f"{title}, {poster_image}")
+
+    logging.debug(f"imdb_id: {imdb_id}")
+    logging.debug(f"formatted_imdb_url: {formatted_imdb_url}")
+    logging.debug(f"response code: {page.status_code}")
+    logging.debug(f"{title}, {poster_image}")
 
     return title, poster_image, formatted_imdb_url
 
