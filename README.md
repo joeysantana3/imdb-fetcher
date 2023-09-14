@@ -30,3 +30,5 @@ You can add any other columns you wish to your Notion database, as long as it ha
 
 ### Demo
 
+https://github.com/joeysantana3/imdb-fetcher/assets/40314133/3d0a89f5-4ebb-4aa4-8dff-6bd78df8044a
+
