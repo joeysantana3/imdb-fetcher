@@ -29,7 +29,9 @@ You can add any other columns you wish to your Notion database, as long as it ha
 4. Run this script. It will query your Notion database for any items with an empty Title or Poster field, and update them with the movie details from IMDB.
 
 ### Demo
-
 https://github.com/joeysantana3/imdb-fetcher/assets/40314133/c7b3a909-08ec-476e-a42f-1263449c4a8f
+
+### Dashboard/Poster View in Notion
+![poster_view](https://github.com/joeysantana3/imdb-fetcher/assets/40314133/626ffd56-06f5-405b-bcfc-a6646e04aa8a)
 
 
