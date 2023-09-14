@@ -15,9 +15,9 @@ NOTICE: This script relies on the HTML structure of an IMDB page to stay as it w
 ### What are the prerequisites.
 
 The script assumes you have a notion database with at least the following columns:
-- Title (the title of the movie)
-- Link (the imdb link to the movie)
-- Poster (a link to the poster image for the movie)
+- Title (the title of the movie, will be filled by script)
+- Link (the imdb link to the movie, you must paste in the link)
+- Poster (a link to the poster image for the movie, will be filled by the script)
 
 You can add any other columns you wish to your Notion database, as long as it has the above three.
 
