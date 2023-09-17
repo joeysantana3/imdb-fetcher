@@ -16,7 +16,8 @@ The script assumes you have a notion database with at least the following column
 - Title (the title of the movie)
 - Link (the imdb link to the movie)
 - Poster (a link to the poster image for the movie)
-You can add any other columns you wish to your Notion database, as long as it has the above three.
+- Genres (a list of genres the movie belongs to)
+You can add any other columns you wish to your Notion database, as long as it has at least the above columns.
 
 How to use:
 1. Make sure your API key and Notion database ID are available to python as environment variables.
@@ -44,13 +45,12 @@ NOTION_HEADERS = {
 }
 
 
-def get_notion_database(databaseId: str, token: str) -> dict:
+def get_notion_database(databaseId: str) -> dict:
     """
     Query the Notion database for items with an empty Title or Poster field.
 
     Parameters:
     - databaseId: the ID of the Notion database to query
-    - token: your Notion API token
 
     Returns:
     - a dict containing the results of the query
@@ -81,7 +81,8 @@ def get_movie_details(imdb_link: str) -> tuple:
     - imdb_link: the IMDB link to the movie/tv show
 
     Returns:
-    - a tuple containing the title, poster image link, and a formatted IMDB link
+    - a tuple containing the title, poster image link, formatted IMDB link, and a 
+    list of genres the movie belongs to
     """
     logging.info(f"Getting movie details for {imdb_link}")
     imdb_id = re.search(r"tt\d+", imdb_link).group()
@@ -103,16 +104,21 @@ def get_movie_details(imdb_link: str) -> tuple:
         raise ValueError(f"No poster image found for IMDB link: {imdb_link}")
     poster_image = poster_img_html[0].get("content")
 
+    formatted_genre_tags = []
+    genre_tags = soup.find_all("span", class_="ipc-chip__text")
+    for tag in genre_tags:
+        if "Back to top" not in tag.text:
+            formatted_genre_tags.append(tag.text)
 
     logging.debug(f"imdb_id: {imdb_id}")
     logging.debug(f"formatted_imdb_url: {formatted_imdb_url}")
     logging.debug(f"response code: {page.status_code}")
-    logging.debug(f"{title}, {poster_image}")
+    logging.debug(f"{title}, {poster_image} ({formatted_genre_tags})")
 
-    return title, poster_image, formatted_imdb_url
+    return title, poster_image, formatted_imdb_url, formatted_genre_tags
 
 
-def query_notion_database(databaseId: str, link: str, token: str) -> dict:
+def query_notion_database(databaseId: str, link: str) -> dict:
     """
     Query the Notion database for items with a matching IMDB link.
     Not currently used in the main workflow.
@@ -120,7 +126,6 @@ def query_notion_database(databaseId: str, link: str, token: str) -> dict:
     Parameters:
     - databaseId: the ID of the Notion database to query
     - link: the IMDB link to query for
-    - token: your Notion API token
 
     Returns:
     - a dict containing the results of the query
@@ -135,7 +140,7 @@ def query_notion_database(databaseId: str, link: str, token: str) -> dict:
     return response.json()
 
 
-def update_notion_page(pageId: str, title: str, poster_link: str, token: str) -> str:
+def update_notion_page(pageId: str, title: str, poster_link: str, genre_tags: list[str]) -> str:
     """
     Update the Notion database item with the movie details from IMDB.
 
@@ -143,7 +148,7 @@ def update_notion_page(pageId: str, title: str, poster_link: str, token: str) ->
     - pageId: the ID of the Notion database item to update
     - title: the title of the movie/tv show
     - poster_link: the link to the poster image for the movie/tv show
-    - token: your Notion API token
+    - genre_tags: a list of genres the movie belongs to
 
     Returns:
     - a string containing the response from the API
@@ -152,6 +157,7 @@ def update_notion_page(pageId: str, title: str, poster_link: str, token: str) ->
         "properties": {
             "Poster": {"url": poster_link},
             "Title": {"title": [{"text": {"content": title}}]},
+            "Genres": {"rich_text": [{"text": {"content": ", ".join(genre_tags)}}]},
         },
         "cover": {"type": "external", "external": {"url": poster_link}
         }
@@ -176,9 +182,9 @@ if __name__ == "__main__":
                 logging.debug(f"database_entry_id: {database_entry_id}")
                 logging.info(f"movie_id to be updated: {movie_id}")
                 logging.info(f"database_entry_id to be updated: {database_entry_id}")
-                title, poster_image, formatted_imdb_url = get_movie_details(movie_id)
+                title, poster_image, formatted_imdb_url, genres = get_movie_details(movie_id)
                 update_db_response = update_notion_page(
-                    database_entry_id, title, poster_image, NOTION_TOKEN
+                    database_entry_id, title, poster_image, genres
                 )
                 logging.info(update_db_response)
             except Exception as e:
