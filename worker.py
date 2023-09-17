@@ -142,7 +142,9 @@ def query_notion_database(databaseId: str, link: str) -> dict:
     return response.json()
 
 
-def update_notion_page(pageId: str, title: str, poster_link: str, genre_tags: list[str]) -> str:
+def update_notion_page(pageId: str, title: str, poster_link: str, genre_tags) -> str:
+    # removed type hint for genre_tags because it's not supported in the python
+    # version running on the cloud function
     """
     Update the Notion database item with the movie details from IMDB.
 
