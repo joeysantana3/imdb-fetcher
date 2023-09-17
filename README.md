@@ -1,5 +1,9 @@
 # Notion Automation Functions
 
+## TODO
+Updating to using the [class based verision](classified.py)
+
+
 ## Notion Movie Watch List Metadata Updater
 
 I wrote this script to help me manage my Movie and TV Show watchlist in Notion. I can browse IMDB for content I want to watch, paste the IMDB link to my Notion database, then this script updates the database with things like the title of the movie and a link to the poster image.

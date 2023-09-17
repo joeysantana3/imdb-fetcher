@@ -25,9 +25,6 @@ class WatchlistUpdater:
         """
         Query the Notion database for items with an empty Title or Poster field.
 
-        Parameters:
-        - databaseId: the ID of the Notion database to query
-
         Returns:
         - a dict containing the results of the query
         """
@@ -101,7 +98,6 @@ class WatchlistUpdater:
         Not currently used in the main workflow.
 
         Parameters:
-        - databaseId: the ID of the Notion database to query
         - link: the IMDB link to query for
 
         Returns:
@@ -121,8 +117,8 @@ class WatchlistUpdater:
     def update_notion_page(
         self, pageId: str, title: str, poster_link: str, genre_tags
     ) -> str:
-        # removed type hint for genre_tags because it's not supported in the python
-        # version running on the cloud function
+        # removed type hint for genre_tags because type list[str] is not supported
+        # in the python version running on the cloud function
         """
         Update the Notion database item with the movie details from IMDB.
 
