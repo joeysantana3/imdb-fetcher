@@ -176,7 +176,7 @@ def update_notion_page(pageId: str, title: str, poster_link: str, genre_tags) ->
 
 
 if __name__ == "__main__":
-    results = get_notion_database(NOTION_DATABASE_ID, NOTION_TOKEN)
+    results = get_notion_database(NOTION_DATABASE_ID)
 
     if results["results"]:
         for result in results["results"]:
