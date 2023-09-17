@@ -1,6 +1,8 @@
 # Render
 Render is my choice for cloud providers and has a great offering for running this script. It does cost money, but is pretty cheap.
 
+You could also use other cloud provider's serverless offerings such as AWS Lambda or Azure Functions, but it's more complicated.
+
 ## Run this script in the cloud.
 1. Go to https://render.com and sign up for account. You will likely need to enter in CC info.
 2. Fork this repo into your github account.
