@@ -1,7 +1,7 @@
 # Notion Automation Functions
 
 ## TODO
-Updating to using the [class based verision](classified.py)
+- Update to using the [class based verision](classified.py)
 
 
 ## Notion Movie Watch List Metadata Updater
