@@ -29,3 +29,15 @@ In this doc I'll walk you through how I set up my watchlist.
 6. Paste the link to your new database. Choose an empty row and paste the link into the "Link" column.
 
 ![Screenshot from 2023-09-16 22-40-01](https://github.com/joeysantana3/imdb-fetcher/assets/40314133/a88c3bc7-9f20-4603-a111-96e9cdf5f699)
+
+
+## Integration/API Key
+
+In order to get an API key for use with this script, follow these steps:
+1. Go to https://www.notion.so/my-integrations/.
+2. Click "+ New integraion."
+3. Give it a name and leave everything else default.
+4. Click "Submit ->."
+5. On the next page, you should be presented with an "Internal Integration Secret." Copy that and save it. This is your API Key.
+
+![Screenshot from 2023-09-16 22-45-50](https://github.com/joeysantana3/imdb-fetcher/assets/40314133/00ddad67-61d8-4323-930e-692ca233826e)
