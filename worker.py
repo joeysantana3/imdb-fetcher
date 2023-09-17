@@ -92,7 +92,7 @@ def get_movie_details(imdb_link: str) -> tuple:
         logging.error(f"Failed to get movie details for {imdb_link}")
         logging.error(f"Response code: {page.status_code}")
         logging.error(f"Response text: {page.text}")
-        return None, None, None
+        raise ConnectionError(f"Failed to get movie details for {imdb_link}")
     soup = BeautifulSoup(page.content, "html.parser")
     title_html = soup.find_all("h1")
     if not title_html:
@@ -104,8 +104,10 @@ def get_movie_details(imdb_link: str) -> tuple:
         raise ValueError(f"No poster image found for IMDB link: {imdb_link}")
     poster_image = poster_img_html[0].get("content")
 
-    formatted_genre_tags = []
     genre_tags = soup.find_all("span", class_="ipc-chip__text")
+    if not genre_tags:
+        raise ValueError(f"No genres found for IMDB link: {imdb_link}")
+    formatted_genre_tags = []
     for tag in genre_tags:
         if "Back to top" not in tag.text:
             formatted_genre_tags.append(tag.text)
@@ -151,7 +153,7 @@ def update_notion_page(pageId: str, title: str, poster_link: str, genre_tags: li
     - genre_tags: a list of genres the movie belongs to
 
     Returns:
-    - a string containing the response from the API
+    - a string success message
     """
     data = {
         "properties": {
