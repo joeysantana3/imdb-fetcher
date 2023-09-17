@@ -20,8 +20,9 @@ The script assumes you have a notion database with at least the following column
 - Title (the title of the movie, will be filled by script)
 - Link (the imdb link to the movie, you must paste in the link)
 - Poster (a link to the poster image for the movie, will be filled by the script)
+- Genres (a list of genres the movie belongs to, will be filled by the script)
 
-You can add any other columns you wish to your Notion database, as long as it has the above three.
+You can add any other columns you wish to your Notion database, as long as it has at least the above four.
 
 ### How to use it.
 
@@ -32,7 +33,7 @@ You can add any other columns you wish to your Notion database, as long as it ha
 
 ### Deploy the job to the cloud.
 
-This script is much more useful and conveinent when it's run in the cloud and doesn't require any manual intervention or your local computer be up and running. There are many services out there that will do this, but [Render](https://render.com) is th easiest in my opinion. They have a [cronjob](https://render.com/docs/cronjobs) function that is perfect for this.
+This script is much more useful and conveinent when it's run in the cloud and doesn't require any manual intervention or your local computer be up and running. There are many services out there that will do this, but [Render](https://render.com) is the easiest in my opinion. They have a [cronjob](https://render.com/docs/cronjobs) function that is perfect for this.
 
 You could also use another serverless/function based service of your choice (for example, AWS Lambda).
 
