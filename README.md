@@ -28,6 +28,9 @@ The script assumes you have a notion database with at least the following column
 
 You can add any other columns you wish to your Notion database, as long as it has at least the above four.
 
+### Set up your Notion page.
+[Notion Setup](../main/docs/Notion-Info.md#watchlist-setup)
+
 ### How to use it.
 
 1. Make sure your API key and Notion database ID are available to python as environment variables.
@@ -37,16 +40,8 @@ You can add any other columns you wish to your Notion database, as long as it ha
 
 ### Deploy the job to the cloud.
 
-This script is much more useful and conveinent when it's run in the cloud and doesn't require any manual intervention or your local computer be up and running. There are many services out there that will do this, but [Render](https://render.com) is the easiest in my opinion. They have a [cronjob](https://render.com/docs/cronjobs) function that is perfect for this.
-
-You could also use another serverless/function based service of your choice (for example, AWS Lambda).
-
-1. Go to https://render.com
-2. Create an account.
-3. Create a new cron job.
-4. Connect your github account
-5. Add your environment vars to the cron job using the Render UI.
-6. Deploy
+This script is much more useful and conveinent when it's run in the cloud and doesn't require any manual intervention or your local computer be up and running.
+[See here for more info.](../main/docs/RENDER.md)
 
 ### Demo
 https://github.com/joeysantana3/imdb-fetcher/assets/40314133/c7b3a909-08ec-476e-a42f-1263449c4a8f
